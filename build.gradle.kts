@@ -22,3 +22,20 @@ subprojects {
 
 
 }
+
+tasks {
+
+    // LocalStack Integration Tests can't run in parallel
+    // that's why we build sequential run
+    val itTasks = getTasksByName("integrationTest", true)
+        .filterIsInstance<IntegrationTestTask>()
+        .filter { it.runSequentially }
+        .sortedBy{ it.priority }
+    var previous: Task? = null
+    for (task in itTasks) {
+        if (previous != null) {
+            task.mustRunAfter(previous)
+        }
+        previous = task
+    }
+}

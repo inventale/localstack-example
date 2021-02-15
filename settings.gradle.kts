@@ -11,4 +11,6 @@ gradleEnterprise {
     }
 }
 
-include()
+include("s3")
+include("sqs")
+include("common")

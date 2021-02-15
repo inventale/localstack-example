@@ -16,7 +16,19 @@ cache:
 # --------- Verify stage ---------
 it:
   stage: verify
+  services:
+    - docker:dind
+    # run AWS infra locally
+    - name: localstack/localstack
+      alias: localstack
   script:
+    # Specify localstack specific
+    # See SystemEnvHostNameResolver
+    - export HOSTNAME_EXTERNAL=localstack
+    # here all necessary services for localstack should be listed
+    - export SERVICES=sqs,s3
+
+    # run integrationTest
     - ./gradlew clean integrationTest
   artifacts:
     expire_in: 3 days
