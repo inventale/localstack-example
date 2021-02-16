@@ -19,6 +19,22 @@ cache:
     - .gradle/caches
 
 # --------- Verify stage ---------
+tests:
+  stage: verify
+  script:
+    - ./gradlew clean test check --build-cache --scan
+  except:
+    - schedules
+    - tags
+  artifacts:
+    expire_in: 3 days
+    when: always
+    name: "$CI_BUILD_ID"
+    paths:
+      - $CI_PROJECT_DIR/**/build/reports/*
+    reports:
+      junit: $CI_PROJECT_DIR/**/build/test-results/test/TEST-*.xml
+
 it:
   stage: verify
   services:

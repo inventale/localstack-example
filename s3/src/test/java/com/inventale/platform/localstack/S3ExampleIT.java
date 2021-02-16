@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-// Annotations below are required for local run and to initiate all necessary params
-// LocalstackTestRunner is used for junit4
-// LocalstackDockerExtension is used for junit5
+// Annotations below are required for local run and to initiate all  necessary params
+// @RunWith(LocalstackTestRunner) is used for junit4
+// @ExtendWith(LocalstackDockerExtension) is used for junit5
 @ExtendWith(LocalstackDockerExtension.class)
 @LocalstackDockerProperties(
         services = "s3",
