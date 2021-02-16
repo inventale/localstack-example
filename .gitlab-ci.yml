@@ -3,6 +3,11 @@ image: docker.inventale.com/platform/build/jdk/jdk11:1.1.6
 stages:
   - verify
 
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
 before_script:
   #  cache gradle for the branch
   - export GRADLE_USER_HOME=`pwd`/.gradle
