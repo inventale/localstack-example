@@ -4,8 +4,6 @@ object Versions {
 
     //Libs
     const val guava = "30.1-jre"
-    const val gson = "2.8.6"
-    const val slf4j = "1.7.30"
 
     // Localstack + aws
     const val localstack = "0.2.7"
@@ -21,7 +19,6 @@ object Plugins {
 
 object Libs {
     const val guava = "com.google.guava:guava:${Versions.guava}"
-    const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     const val localstack = "cloud.localstack:localstack-utils:${Versions.localstack}"
     const val s3 = "software.amazon.awssdk:s3:${Versions.awsJavaSdkV2}"

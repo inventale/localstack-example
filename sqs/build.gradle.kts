@@ -11,6 +11,8 @@ java {
 dependencies {
     api(project(":common"))
 
+    implementation(Libs.sqs)
+
     testImplementation(Libs.junit)
     testImplementation(Libs.junitEngine)
     testImplementation(Libs.junitParams)
