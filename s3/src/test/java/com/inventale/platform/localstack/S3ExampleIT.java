@@ -4,6 +4,7 @@ import cloud.localstack.awssdkv2.TestUtils;
 import cloud.localstack.docker.LocalstackDockerExtension;
 import cloud.localstack.docker.annotation.LocalstackDockerProperties;
 import com.inventale.platform.utils.SystemEnvHostNameResolver;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         services = "s3",
         hostNameResolver = SystemEnvHostNameResolver.class
 )
+@Tag("IT")
 class S3ExampleIT {
     private static final String BUCKET_TEST_NAME = "localstack-test";
 

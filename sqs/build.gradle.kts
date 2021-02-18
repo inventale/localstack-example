@@ -29,12 +29,13 @@ val integrationTest = task<IntegrationTestTask>("integrationTest") {
     runSequentially = true
     // priority is used to order the execution of integration tests that use LocalStack (it shares common resources)
     priority = 1
-    filter { includeTestsMatching("*IT") }
     reports {
         junitXml.isEnabled = true
     }
 
-    useJUnitPlatform()
+    useJUnitPlatform{
+        includeTags("IT")
+    }
 }
 
 integrationTest.outputs.upToDateWhen { false }

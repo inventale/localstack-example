@@ -4,6 +4,7 @@ import cloud.localstack.awssdkv2.TestUtils;
 import cloud.localstack.docker.LocalstackDockerExtension;
 import cloud.localstack.docker.annotation.LocalstackDockerProperties;
 import com.inventale.platform.utils.SystemEnvHostNameResolver;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         services = "sqs",
         hostNameResolver = SystemEnvHostNameResolver.class
 )
+@Tag("IT")
 class SqsExampleIT {
 
     private static final String LOCALSTACK_TEST_QUEUE = "localstack-test-queue";
