@@ -19,7 +19,9 @@ dependencies {
 }
 
 tasks.test {
-    useJUnitPlatform()
+    useJUnitPlatform{
+        excludeTags("IT")
+    }
     // to use properties from /config in tests
     workingDir = rootDir
 }
