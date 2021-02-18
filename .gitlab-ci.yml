@@ -1,0 +1,65 @@
+image: docker.inventale.com/platform/build/jdk/jdk11:1.1.6
+
+stages:
+  - verify
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+before_script:
+  #  cache gradle for the branch
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  key: rest-assured-one-key-to-rule-them-all
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+# --------- Verify stage ---------
+tests:
+  stage: verify
+  script:
+    - ./gradlew clean test check --build-cache --scan
+  except:
+    - schedules
+    - tags
+  artifacts:
+    expire_in: 3 days
+    when: always
+    name: "$CI_BUILD_ID"
+    paths:
+      - $CI_PROJECT_DIR/**/build/reports/*
+    reports:
+      junit: $CI_PROJECT_DIR/**/build/test-results/test/TEST-*.xml
+
+it:
+  stage: verify
+  services:
+    - docker:dind
+    # run AWS infra locally
+    - name: localstack/localstack
+      alias: localstack
+  script:
+    # Specify localstack specific
+    # See SystemEnvHostNameResolver
+    - export HOSTNAME_EXTERNAL=localstack
+    # here all necessary services for localstack should be listed
+    - export SERVICES=sqs,s3
+
+    # run integrationTest
+    - ./gradlew clean integrationTest
+  artifacts:
+    expire_in: 3 days
+    when: always
+    name: "$CI_BUILD_ID"
+    paths:
+      - gradle.log
+      - $CI_PROJECT_DIR/**/build/*
+    reports:
+      junit: $CI_PROJECT_DIR/**/build/test-results/*/TEST-*.xml
+  only:
+    variables:
+      - $RUN_IT
